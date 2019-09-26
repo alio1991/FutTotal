@@ -1,10 +1,11 @@
 import { LitElement, html } from 'lit-element'
 import { routerMixin } from './node_modules/lit-element-router/lit-element-router'
+// import { MainView } from './src/app/views/main-view.js'
 
 import './app-link';
 import './app-main';
 
-class MyApp extends routerMixin(LitElement) {
+class RouterOutlet extends routerMixin(LitElement) {
 
   static get properties() {
     return {
@@ -16,14 +17,14 @@ class MyApp extends routerMixin(LitElement) {
   static get routes() {
     return [{
       name: 'home',
-      pattern: '',
+      pattern: 'home',
       data: { title: 'Home' }
     }, {
-      name: 'info',
-      pattern: 'info'
+      name: 'lineup',
+      pattern: 'lineup'
     }, {
-      name: 'user',
-      pattern: 'user/:id'
+      name: 'market',
+      pattern: 'market'
     }, {
       name: 'not-found',
       pattern: '*'
@@ -44,20 +45,49 @@ class MyApp extends routerMixin(LitElement) {
 
   render() {
     return html`
-    	<script type="module" src="./src/app/views/main-view.js"></script>
+    <style>
+      :host {
+      display: block;
+    }
+    
+    .menu-element{
+      padding: 2px;
+      margin: 2px;
+      background-color: white;
+    }
 
-      <app-link href="/">Home</app-link>
-      <app-link href="/info">Info</app-link>
-      <app-link href="/user/14">user/14</app-link>
+    .menu-element > a:link{
+      text-decoration: none;
+      color: white;
+    }
+
+    .menu-bar{
+      display: flex;
+      justify-content: flex-start;
+    }
+    </style>
+      <main-view></main-view>
+      <div class="menu-bar">
+          <app-link class="menu-element" href="/home"> Home </app-link>
+          <app-link class="menu-element" href="/lineup"> Alineacion</app-link>
+          <app-link class="menu-element" href="/market"> Tienda </app-link>
+      </div>
 
       <app-main current-route=${this.route}>
-          <main-view route='home'></main-view>
-          <h1 route='info'>Info</h1>
-          <h1 route='user'>User ${this.params.id} </h1>
-          <h1 route='not-found'>Not Found </h1>
+        <div route='home'>
+          <p>MAIN</p>
+          <main-view></main-view>
+        </div>
+        <div route='lineup'>
+          <p>LINEUP</p>
+        </div>
+        <div route='market'>
+          <p>MARKET</p>
+        </div>
+        <h1 route='not-found'> Not Found </h1>
       </app-main>
     `
   }
 }
 
-customElements.define('my-app', MyApp);
+customElements.define('router-outlet', RouterOutlet);
