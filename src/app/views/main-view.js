@@ -5,7 +5,7 @@ class MainView extends LitElement {
   render(){
 
     return html`
-      <h1>LINEUP</h1>
+      <h1>Noticias</h1>
     `;
   }
 }
